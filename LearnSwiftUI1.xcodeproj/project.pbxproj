@@ -12,6 +12,11 @@
 		FD17D3D02380A9AE0013353F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD17D3CF2380A9AE0013353F /* Assets.xcassets */; };
 		FD17D3D32380A9AE0013353F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD17D3D22380A9AE0013353F /* Preview Assets.xcassets */; };
 		FD17D3D62380A9AE0013353F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD17D3D42380A9AE0013353F /* Main.storyboard */; };
+		FD8302FC239F3CCC004F142E /* EarthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8302F8239F3CCC004F142E /* EarthModel.swift */; };
+		FD8302FD239F3CCC004F142E /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8302F9239F3CCC004F142E /* Model.swift */; };
+		FD8302FE239F3CCC004F142E /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8302FA239F3CCC004F142E /* Defaults.swift */; };
+		FD8302FF239F3CCC004F142E /* TempSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD8302FB239F3CCC004F142E /* TempSolver.swift */; };
+		FD830304239F3F9B004F142E /* ObservableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD830303239F3F9B004F142E /* ObservableModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +28,11 @@
 		FD17D3D52380A9AE0013353F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FD17D3D72380A9AE0013353F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD17D3D82380A9AE0013353F /* LearnSwiftUI1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LearnSwiftUI1.entitlements; sourceTree = "<group>"; };
+		FD8302F8239F3CCC004F142E /* EarthModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EarthModel.swift; sourceTree = "<group>"; };
+		FD8302F9239F3CCC004F142E /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		FD8302FA239F3CCC004F142E /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		FD8302FB239F3CCC004F142E /* TempSolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempSolver.swift; sourceTree = "<group>"; };
+		FD830303239F3F9B004F142E /* ObservableModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +51,7 @@
 			children = (
 				FD17D3CA2380A9AC0013353F /* LearnSwiftUI1 */,
 				FD17D3C92380A9AC0013353F /* Products */,
+				FD8302E9239F3BBB004F142E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,8 +66,10 @@
 		FD17D3CA2380A9AC0013353F /* LearnSwiftUI1 */ = {
 			isa = PBXGroup;
 			children = (
+				FD8302F6239F3CCC004F142E /* ebm1dLib */,
 				FD17D3CB2380A9AC0013353F /* AppDelegate.swift */,
 				FD17D3CD2380A9AC0013353F /* ContentView.swift */,
+				FD830303239F3F9B004F142E /* ObservableModel.swift */,
 				FD17D3CF2380A9AE0013353F /* Assets.xcassets */,
 				FD17D3D42380A9AE0013353F /* Main.storyboard */,
 				FD17D3D72380A9AE0013353F /* Info.plist */,
@@ -72,6 +85,33 @@
 				FD17D3D22380A9AE0013353F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FD8302E9239F3BBB004F142E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FD8302F6239F3CCC004F142E /* ebm1dLib */ = {
+			isa = PBXGroup;
+			children = (
+				FD8302F7239F3CCC004F142E /* model */,
+			);
+			name = ebm1dLib;
+			path = ../../ebm1d_swift/ebm1d/Sources/ebm1dLib;
+			sourceTree = "<group>";
+		};
+		FD8302F7239F3CCC004F142E /* model */ = {
+			isa = PBXGroup;
+			children = (
+				FD8302F8239F3CCC004F142E /* EarthModel.swift */,
+				FD8302F9239F3CCC004F142E /* Model.swift */,
+				FD8302FA239F3CCC004F142E /* Defaults.swift */,
+				FD8302FB239F3CCC004F142E /* TempSolver.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -146,7 +186,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD17D3CE2380A9AC0013353F /* ContentView.swift in Sources */,
+				FD8302FC239F3CCC004F142E /* EarthModel.swift in Sources */,
+				FD8302FE239F3CCC004F142E /* Defaults.swift in Sources */,
 				FD17D3CC2380A9AC0013353F /* AppDelegate.swift in Sources */,
+				FD8302FF239F3CCC004F142E /* TempSolver.swift in Sources */,
+				FD830304239F3F9B004F142E /* ObservableModel.swift in Sources */,
+				FD8302FD239F3CCC004F142E /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

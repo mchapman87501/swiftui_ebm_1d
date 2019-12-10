@@ -9,8 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var numLatBands = 9.0
-    @State var latHTC = 7.6
+    @EnvironmentObject var model: ObservableModel
     
     var floatFmtr: NumberFormatter = {
         let f = NumberFormatter()
@@ -23,17 +22,19 @@ struct ContentView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text("Lat Bands: 1")
-                    Slider(value: $numLatBands, in: 1...90)
+                    Slider(value: $model.numLatBands, in: 1...90)
                         .frame(maxWidth: 240)
                     Text("90")
                 }
                 HStack {
                     Text("Lateral Heat:")
-                    TextField("7.6", value: $latHTC, formatter: floatFmtr)
+                    TextField("7.6", value: $model.latHeatTransferCoeff,
+                              formatter: floatFmtr)
                         .frame(maxWidth: 40)
                         .multilineTextAlignment(.trailing)
                 }
                 
+                // Placeholder for the plots:
                 Rectangle()
                     .foregroundColor(.white)
                     .frame(minHeight: 240)
@@ -52,6 +53,7 @@ struct ContentView: View {
             }
             .padding()
         }
+        .frame(minWidth: 640, minHeight: 640)
     }
 }
 
@@ -59,5 +61,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+        .environmentObject(ObservableModel())
     }
 }
