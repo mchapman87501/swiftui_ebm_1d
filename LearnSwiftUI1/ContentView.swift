@@ -33,6 +33,16 @@ struct ContentView: View {
                         .frame(maxWidth: 40)
                         .multilineTextAlignment(.trailing)
                 }
+
+                HStack {
+                    Spacer()
+                    Button(action: model.updateSolutions) {
+                        Text("Update")
+                    }
+                    Spacer()
+                }
+                
+                Divider()
                 
                 // Placeholder for the plots:
                 Rectangle()
