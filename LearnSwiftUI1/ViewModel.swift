@@ -9,6 +9,8 @@
 import SwiftUI
 import Combine
 
+import ebm1dLib
+
 // x == solar multiplier
 // y == steady-state global average temperature
 typealias GlobalStateSolution = CGPoint
@@ -50,6 +52,7 @@ final class ViewModel: ObservableObject {
     }
     
     func updateSolutions() {
+        
         let solutions = Model.getSolutions(minSM: minSolarMult, maxSM: maxSolarMult, gat0: gat0, numZones: Int(numLatBands), f: latHeatTransferCoeff)
         let solvedStates: [GlobalStateSolution] = solutions.map { solution in
             let solarMult = solution.solarMult
