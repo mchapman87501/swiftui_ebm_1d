@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @EnvironmentObject var model: ObservableModel
+    @ObservedObject var model = ViewModel()
     
     var floatFmtr: NumberFormatter = {
         let f = NumberFormatter()
@@ -37,13 +37,13 @@ struct ContentView: View {
                 HStack {
                     Spacer()
                     Button(action: model.updateSolutions) {
-                        Text("Update")
+                            Text("Update")
                     }
+                    .disabled(!model.dirty)
                     Spacer()
                 }
-                
                 Divider()
-                
+                    
                 // Placeholder for the plots:
                 Rectangle()
                     .foregroundColor(.white)
@@ -71,6 +71,6 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-        .environmentObject(ObservableModel())
+        .environmentObject(ViewModel())
     }
 }
