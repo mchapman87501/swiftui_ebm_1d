@@ -45,9 +45,12 @@ struct ContentView: View {
                 Divider()
                     
                 // Placeholder for the plots:
-                Rectangle()
+                ChartView(data: model.chartData, palette: [.blue, .red])
+                    .frame(minWidth: 240, minHeight: 240)
                     .foregroundColor(.white)
-                    .frame(minHeight: 240)
+//                Rectangle()
+//                    .foregroundColor(.white)
+//                    .frame(minHeight: 240)
 
                 HStack {
                     Spacer()
@@ -71,6 +74,5 @@ struct ContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
-        .environmentObject(ViewModel())
     }
 }

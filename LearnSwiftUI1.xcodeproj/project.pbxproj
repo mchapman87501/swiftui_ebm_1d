@@ -13,6 +13,10 @@
 		FD17D3D32380A9AE0013353F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FD17D3D22380A9AE0013353F /* Preview Assets.xcassets */; };
 		FD17D3D62380A9AE0013353F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FD17D3D42380A9AE0013353F /* Main.storyboard */; };
 		FD3E1A1623A0B3020084BF4F /* ebm1dLib in Frameworks */ = {isa = PBXBuildFile; productRef = FD3E1A1523A0B3020084BF4F /* ebm1dLib */; };
+		FD3E1A2423A1D94E0084BF4F /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2023A1D94E0084BF4F /* ChartData.swift */; };
+		FD3E1A2523A1D94E0084BF4F /* Series2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2123A1D94E0084BF4F /* Series2D.swift */; };
+		FD3E1A2623A1D94E0084BF4F /* AxisLimits.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift.swift */; };
+		FD3E1A2723A1D94E0084BF4F /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2323A1D94E0084BF4F /* ChartView.swift */; };
 		FD830304239F3F9B004F142E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD830303239F3F9B004F142E /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -26,6 +30,10 @@
 		FD17D3D72380A9AE0013353F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD17D3D82380A9AE0013353F /* LearnSwiftUI1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LearnSwiftUI1.entitlements; sourceTree = "<group>"; };
 		FD3E1A1423A0B2EB0084BF4F /* ebm1d */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ebm1d; path = ../ebm1d_swift/ebm1d; sourceTree = "<group>"; };
+		FD3E1A2023A1D94E0084BF4F /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
+		FD3E1A2123A1D94E0084BF4F /* Series2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Series2D.swift; sourceTree = "<group>"; };
+		FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisLimits.swift.swift; sourceTree = "<group>"; };
+		FD3E1A2323A1D94E0084BF4F /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		FD830303239F3F9B004F142E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +69,7 @@
 		FD17D3CA2380A9AC0013353F /* LearnSwiftUI1 */ = {
 			isa = PBXGroup;
 			children = (
+				FD3E1A1F23A1D9290084BF4F /* ChartViews */,
 				FD17D3CB2380A9AC0013353F /* AppDelegate.swift */,
 				FD17D3CD2380A9AC0013353F /* ContentView.swift */,
 				FD830303239F3F9B004F142E /* ViewModel.swift */,
@@ -79,6 +88,17 @@
 				FD17D3D22380A9AE0013353F /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		FD3E1A1F23A1D9290084BF4F /* ChartViews */ = {
+			isa = PBXGroup;
+			children = (
+				FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift.swift */,
+				FD3E1A2023A1D94E0084BF4F /* ChartData.swift */,
+				FD3E1A2323A1D94E0084BF4F /* ChartView.swift */,
+				FD3E1A2123A1D94E0084BF4F /* Series2D.swift */,
+			);
+			path = ChartViews;
 			sourceTree = "<group>";
 		};
 		FD8302E9239F3BBB004F142E /* Frameworks */ = {
@@ -163,8 +183,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FD3E1A2523A1D94E0084BF4F /* Series2D.swift in Sources */,
+				FD3E1A2623A1D94E0084BF4F /* AxisLimits.swift.swift in Sources */,
 				FD17D3CE2380A9AC0013353F /* ContentView.swift in Sources */,
+				FD3E1A2723A1D94E0084BF4F /* ChartView.swift in Sources */,
 				FD17D3CC2380A9AC0013353F /* AppDelegate.swift in Sources */,
+				FD3E1A2423A1D94E0084BF4F /* ChartData.swift in Sources */,
 				FD830304239F3F9B004F142E /* ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -45,21 +45,49 @@ final class ViewModel: ObservableObject {
     }
     // TODO Add frozen/thawed albedos and critical temperature.
     
-    @Published var globalStates = [GlobalStateSolution]() {
+//    @Published var globalStates = [GlobalStateSolution]() {
+//        didSet {
+//            dirty = false
+//        }
+//    }
+//
+    @Published var chartData = ChartData(series: [Series2D]()) {
         didSet {
+            print("Updated chartData.")
             dirty = false
         }
     }
     
     func updateSolutions() {
-        
+        print("updateSolutions for \(minSolarMult), \(maxSolarMult), \(gat0), \(Int(numLatBands)), \(latHeatTransferCoeff)")
         let solutions = Model.getSolutions(minSM: minSolarMult, maxSM: maxSolarMult, gat0: gat0, numZones: Int(numLatBands), f: latHeatTransferCoeff)
-        let solvedStates: [GlobalStateSolution] = solutions.map { solution in
+//        let solvedStates: [GlobalStateSolution] = solutions.map { solution in
+//            let solarMult = solution.solarMult
+//            let gat = solution.solution.avg
+//            return CGPoint(x: solarMult, y: gat)
+//        }
+        
+        let values: [CGPoint] = solutions.map {
+            solution in
             let solarMult = solution.solarMult
             let gat = solution.solution.avg
             return CGPoint(x: solarMult, y: gat)
         }
-        globalStates = solvedStates
+
+//        globalStates = solvedStates
+
+        let theSeries = Series2D(name: "Rising/Falling", values: values)
+        print("  Solutions: \(values)")
+        chartData = ChartData(series: [theSeries])
+    }
+    
+    init() {
+        numLatBands = 9.0
+        latHeatTransferCoeff = 7.6
+        minSolarMult = 0.1
+        maxSolarMult = 100
+        gat0 = -60.0
+        updateSolutions()
     }
     
 }
