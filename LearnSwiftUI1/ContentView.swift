@@ -19,10 +19,14 @@ struct ContentView: View {
     
     var body: some View {
         let mag = MagnificationGesture()
+            .onChanged {
+                mag in
+                self.model.scaleMultipliersBy(mag)
+            }
             .onEnded {
                 mag in
                 self.model.scaleMultipliersBy(mag)
-        }
+            }
         
         let resetMag = TapGesture(count: 2)
             .onEnded { _ in
@@ -53,12 +57,16 @@ struct ContentView: View {
                         .gesture(mag)
                         .gesture(resetMag)
                         .gesture(DragGesture()
-                            .onEnded {
-                                info in
+                            .onChanged { info in
                                 let dxRaw = info.location.x - info.startLocation.x
                                 let dxFract = -dxRaw / geom.frame(in: .local).width
                                 self.model.shiftMultipliers(dxFract)
-                        })
+                            }
+                            .onEnded { info in
+                                let dxRaw = info.location.x - info.startLocation.x
+                                let dxFract = -dxRaw / geom.frame(in: .local).width
+                                self.model.shiftMultipliers(dxFract)
+                            })
                 }
 
                 HStack {
