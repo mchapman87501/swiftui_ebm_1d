@@ -16,9 +16,20 @@ struct ContentView: View {
         f.numberStyle = .decimal
         return f
     }()
-
+    
     var body: some View {
-        Form {
+        let mag = MagnificationGesture()
+            .onEnded {
+                mag in
+                self.model.scaleMultipliersBy(mag)
+        }
+        
+        let resetMag = TapGesture(count: 2)
+            .onEnded { _ in
+                self.model.resetMultipliers()
+            }
+        
+        return Form {
             VStack(alignment: .leading) {
                 HStack {
                     Text("Lat Bands: 1")
@@ -34,14 +45,21 @@ struct ContentView: View {
                         .multilineTextAlignment(.trailing)
                 }
                 Divider()
-                    
-                // Placeholder for the plots:
-                ChartView(data: model.chartData, palette: [.blue, .red])
-                    .frame(minWidth: 240, minHeight: 240)
-                    .foregroundColor(.white)
-//                Rectangle()
-//                    .foregroundColor(.white)
-//                    .frame(minHeight: 240)
+                
+                GeometryReader { geom in
+                    ChartView(data: self.model.chartData, palette: [.blue, .red])
+                        .frame(minWidth: 240, minHeight: 240)
+                        .foregroundColor(.white)
+                        .gesture(mag)
+                        .gesture(resetMag)
+                        .gesture(DragGesture()
+                            .onEnded {
+                                info in
+                                let dxRaw = info.location.x - info.startLocation.x
+                                let dxFract = -dxRaw / geom.frame(in: .local).width
+                                self.model.shiftMultipliers(dxFract)
+                        })
+                }
 
                 HStack {
                     Spacer()

@@ -42,7 +42,6 @@ struct ChartData: Identifiable {
         // Scale down and distort to *fill* (not fit) (0...1, 0...1).
         // Assume the final display will include axes to annotate
         // distorted presentation.
-//        let scaleDown = min(1.0 / dataRect.width, 1.0 / dataRect.height)
         let trans1 = CGAffineTransform.identity
             .scaledBy(x: 1.0 / dataRect.width, y: 1.0 / dataRect.height)
             .translatedBy(x: -dataRect.origin.x, y: -dataRect.origin.y)
@@ -55,7 +54,6 @@ struct ChartData: Identifiable {
         // Scale up to fill the available rect.  Do not worry about
         // preserving x:y proportion - assume the presented view will
         // have axes.
-//        let scaleUp = min(rect.width, rect.height)
         let trans2 = CGAffineTransform.identity
             .translatedBy(x: rect.origin.x, y: rect.origin.y)
             .scaledBy(x: rect.width, y: rect.height)
@@ -71,8 +69,6 @@ struct ChartData: Identifiable {
             newSeries.append(currSeries.applying(xform))
         }
         let result = ChartData(series: newSeries)
-//        print("Initial chart data: \(series)")
-//        print("Final chart data: \(newSeries)")
         return result
     }
 }

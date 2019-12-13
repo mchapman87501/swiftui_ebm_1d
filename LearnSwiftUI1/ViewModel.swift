@@ -15,6 +15,17 @@ import ebm1dLib
 // y == steady-state global average temperature
 typealias GlobalStateSolution = CGPoint
 
+struct SolarMultRange {
+    public let minVal: Double
+    public let maxVal: Double
+}
+extension SolarMultRange {
+    init() {
+        minVal = 0.1
+        maxVal = 100.0
+    }
+}
+
 final class ViewModel: ObservableObject {
     @Published var numLatBands: Double = 9.0 {
         didSet {
@@ -26,12 +37,7 @@ final class ViewModel: ObservableObject {
             updateSolutions()
         }
     }
-    @Published var minSolarMult: Double = 0.1 {
-        didSet {
-            updateSolutions()
-        }
-    }
-    @Published var maxSolarMult: Double = 100.0 {
+    @Published var solarMultBounds: SolarMultRange = SolarMultRange() {
         didSet {
             updateSolutions()
         }
@@ -46,7 +52,9 @@ final class ViewModel: ObservableObject {
     @Published var chartData = ChartData(series: [Series2D]())
     
     func updateSolutions() {
-        let solutions = Model.getSolutions(minSM: minSolarMult, maxSM: maxSolarMult, gat0: gat0, numZones: Int(numLatBands), f: latHeatTransferCoeff)
+        let solutions = Model.getSolutions(
+            minSM: solarMultBounds.minVal, maxSM: solarMultBounds.maxVal,
+            gat0: gat0, numZones: Int(numLatBands), f: latHeatTransferCoeff)
         
         let values: [CGPoint] = solutions.map {
             solution in
@@ -59,13 +67,34 @@ final class ViewModel: ObservableObject {
         chartData = ChartData(series: [theSeries])
     }
     
+    func scaleMultipliersBy(_ scale: CGFloat) {
+        guard scale > 0 else {
+            return
+        }
+        let sm0 = solarMultBounds.minVal
+        let sm1 = solarMultBounds.maxVal
+        let smMid = (sm0 + sm1) / 2.0
+        let smHalf = (sm1 - sm0) / 2.0
+        let newSMHalf = smHalf / Double(scale)
+        
+        solarMultBounds = SolarMultRange(minVal: smMid - newSMHalf, maxVal: smMid + newSMHalf)
+    }
+    
+    func shiftMultipliers(_ fractOffset: CGFloat) {
+        let curr = solarMultBounds
+        let off = Double(fractOffset) * (curr.maxVal - curr.minVal)
+        solarMultBounds = SolarMultRange(minVal: curr.minVal + off, maxVal: curr.maxVal + off)
+    }
+    
+    func resetMultipliers() {
+        solarMultBounds = SolarMultRange()
+    }
+    
     init() {
         numLatBands = 9.0
         latHeatTransferCoeff = 7.6
-        minSolarMult = 0.1
-        maxSolarMult = 100
+        solarMultBounds = SolarMultRange()
         gat0 = -60.0
         updateSolutions()
     }
-    
 }
