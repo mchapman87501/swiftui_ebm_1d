@@ -16,40 +16,34 @@ import ebm1dLib
 typealias GlobalStateSolution = CGPoint
 
 final class ViewModel: ObservableObject {
-    @Published var dirty = false
-    
     @Published var numLatBands: Double = 9.0 {
         didSet {
-            dirty = true
+            updateSolutions()
         }
     }
     @Published var latHeatTransferCoeff: Double = 7.6 {
         didSet {
-            dirty = true
+            updateSolutions()
         }
     }
     @Published var minSolarMult: Double = 0.1 {
         didSet {
-            dirty = true
+            updateSolutions()
         }
     }
     @Published var maxSolarMult: Double = 100.0 {
         didSet {
-            dirty = true
+            updateSolutions()
         }
     }
     @Published var gat0: Double = -60.0 {
         didSet {
-            dirty = true
+            updateSolutions()
         }
     }
     // TODO Add frozen/thawed albedos and critical temperature.
     
-    @Published var chartData = ChartData(series: [Series2D]()) {
-        didSet {
-            dirty = false
-        }
-    }
+    @Published var chartData = ChartData(series: [Series2D]())
     
     func updateSolutions() {
         let solutions = Model.getSolutions(minSM: minSolarMult, maxSM: maxSolarMult, gat0: gat0, numZones: Int(numLatBands), f: latHeatTransferCoeff)
