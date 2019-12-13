@@ -28,13 +28,12 @@ struct ChartData: Identifiable {
     
     func roundedBounds() -> CGRect {
         let b = bounds()
-        return b
-//        let xAxis = AxisLimits(b.origin.x, b.origin.x + b.size.width)
-//        let yAxis = AxisLimits(b.origin.y, b.origin.y + b.size.height)
-//        let origin = CGPoint(x: xAxis.axMin, y: yAxis.axMin)
-//        let size = CGSize(width: xAxis.extent, height: yAxis.extent)
-//        let result = CGRect(origin: origin, size: size)
-//        return result
+        let xAxis = AxisLimits(b.origin.x, b.origin.x + b.size.width)
+        let yAxis = AxisLimits(b.origin.y, b.origin.y + b.size.height)
+        let origin = CGPoint(x: xAxis.axMin, y: yAxis.axMin)
+        let size = CGSize(width: xAxis.extent, height: yAxis.extent)
+        let result = CGRect(origin: origin, size: size)
+        return result
     }
     
     func rectTransform(_ rect: CGRect) -> CGAffineTransform {
@@ -47,6 +46,11 @@ struct ChartData: Identifiable {
         let trans1 = CGAffineTransform.identity
             .scaledBy(x: 1.0 / dataRect.width, y: 1.0 / dataRect.height)
             .translatedBy(x: -dataRect.origin.x, y: -dataRect.origin.y)
+        
+        // Flip the y axis.
+        let tFlipY = CGAffineTransform.identity
+            .scaledBy(x: 1.0, y: -1.0)
+        .translatedBy(x: 0.0, y: -1.0)
 
         // Scale up to fill the available rect.  Do not worry about
         // preserving x:y proportion - assume the presented view will
@@ -55,7 +59,7 @@ struct ChartData: Identifiable {
         let trans2 = CGAffineTransform.identity
             .translatedBy(x: rect.origin.x, y: rect.origin.y)
             .scaledBy(x: rect.width, y: rect.height)
-        let result = trans1.concatenating(trans2)
+        let result = trans1.concatenating(tFlipY.concatenating(trans2))
         return result
     }
     
