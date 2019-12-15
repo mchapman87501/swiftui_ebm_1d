@@ -41,8 +41,8 @@ struct ContentView: View {
                             .frame(width: 84, alignment: .trailing)
                     }
                     .frame(width: 240)
-                    Text("\(model.numLatBands, specifier: "%4.0f")")
-                        .frame(width: 32, alignment: .trailing)
+                    Text("\(model.numLatBands, specifier: "%.0f")")
+                        .frame(width: 48, alignment: .trailing)
                     Spacer()
                 }
                 HStack {
@@ -51,8 +51,8 @@ struct ContentView: View {
                             .frame(width: 84, alignment: .trailing)
                     }
                     .frame(width: 240)
-                    Text("\(model.latHeatTransferCoeff, specifier: "%4.2f")")
-                        .frame(width: 32, alignment: .trailing)
+                    Text("\(model.latHeatTransferCoeff, specifier: "%.2f")")
+                        .frame(width: 48, alignment: .trailing)
                     Spacer()
                 }
                 Divider()

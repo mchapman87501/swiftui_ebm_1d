@@ -22,7 +22,7 @@ struct SolarMultRange {
 extension SolarMultRange {
     init() {
         minVal = 0.1
-        maxVal = 100.0
+        maxVal = 150.0
     }
 }
 
