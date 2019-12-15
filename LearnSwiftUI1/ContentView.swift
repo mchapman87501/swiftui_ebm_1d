@@ -60,6 +60,7 @@ struct ContentView: View {
                             .onChanged { info in
                                 let dxRaw = info.location.x - info.startLocation.x
                                 let dxFract = -dxRaw / geom.frame(in: .local).width
+                                // TODO let shiftMultipliers distinguish between "transient" and "final" changes.
                                 self.model.shiftMultipliers(dxFract)
                             }
                             .onEnded { info in

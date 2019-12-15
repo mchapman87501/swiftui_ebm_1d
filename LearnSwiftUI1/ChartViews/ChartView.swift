@@ -48,6 +48,8 @@ struct ChartView: View {
     private func fillFromSeries(path: inout Path, _ indexedSeries: IndexedSeries) {
         let dataSeries = indexedSeries.s2d
         let points = dataSeries.values
+        guard points.count > 0 else { return }
+        
         for i in 1..<points.count {
             path.move(to: points[i - 1])
             path.addLine(to: points[i])

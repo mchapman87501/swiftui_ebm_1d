@@ -51,11 +51,7 @@ final class ViewModel: ObservableObject {
     
     @Published var chartData = ChartData(series: [Series2D]())
     
-    func updateSolutions() {
-        let solutions = Model.getSolutions(
-            minSM: solarMultBounds.minVal, maxSM: solarMultBounds.maxVal,
-            gat0: gat0, numZones: Int(numLatBands), f: latHeatTransferCoeff)
-        
+    func seriesFromSolutions(_ solutions: [Model.AvgTempResult], name: String) -> Series2D {
         let values: [CGPoint] = solutions.map {
             solution in
             let solarMult = solution.solarMult
@@ -63,8 +59,23 @@ final class ViewModel: ObservableObject {
             return CGPoint(x: solarMult, y: gat)
         }
 
-        let theSeries = Series2D(name: "Rising/Falling", values: values)
-        chartData = ChartData(series: [theSeries])
+        return Series2D(name: name, values: values)
+    }
+
+    func updateSolutions() {
+        let wrk = DispatchWorkItem {
+            let solutions = Model.getSolutions(
+                minSM: self.solarMultBounds.minVal, maxSM: self.solarMultBounds.maxVal,
+                gat0: self.gat0, numZones: Int(self.numLatBands), f: self.latHeatTransferCoeff)
+            let allSeries: [Series2D] = [
+                self.seriesFromSolutions(solutions.rising, name: "Rising"),
+                self.seriesFromSolutions(solutions.falling, name: "Falling")
+            ]
+            DispatchQueue.main.async {
+                self.chartData = ChartData(series: allSeries)
+            }
+        }
+        DispatchQueue.global().async(execute:wrk)
     }
     
     func scaleMultipliersBy(_ scale: CGFloat) {
