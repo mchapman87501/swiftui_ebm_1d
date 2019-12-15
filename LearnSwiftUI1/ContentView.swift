@@ -36,17 +36,24 @@ struct ContentView: View {
         return Form {
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Lat Bands: 1")
-                    Slider(value: $model.numLatBands, in: 1...90)
-                        .frame(maxWidth: 240)
-                    Text("90")
+                    Slider(value: $model.numLatBands, in: 1...90) {
+                        Text("Lat Bands:")
+                            .frame(width: 84, alignment: .trailing)
+                    }
+                    .frame(width: 240)
+                    Text("\(model.numLatBands, specifier: "%4.0f")")
+                        .frame(width: 32, alignment: .trailing)
+                    Spacer()
                 }
                 HStack {
-                    Text("Lateral Heat:")
-                    TextField("7.6", value: $model.latHeatTransferCoeff,
-                              formatter: floatFmtr)
-                        .frame(maxWidth: 40)
-                        .multilineTextAlignment(.trailing)
+                    Slider(value: $model.latHeatTransferCoeff, in: 0.0...10.0) {
+                        Text("Lateral Heat:")
+                            .frame(width: 84, alignment: .trailing)
+                    }
+                    .frame(width: 240)
+                    Text("\(model.latHeatTransferCoeff, specifier: "%4.2f")")
+                        .frame(width: 32, alignment: .trailing)
+                    Spacer()
                 }
                 Divider()
                 
