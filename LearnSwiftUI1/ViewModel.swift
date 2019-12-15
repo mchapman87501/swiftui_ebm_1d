@@ -26,6 +26,14 @@ extension SolarMultRange {
     }
 }
 
+// Holds parameters for a recalculation.
+struct CalcParameters {
+    let numLatBands: Double
+    let latHeatTransferCoeff: Double
+    let solarMultBounds: SolarMultRange
+    let gat0: Double
+}
+
 final class ViewModel: ObservableObject {
     @Published var numLatBands: Double = 9.0 {
         didSet {
@@ -51,7 +59,7 @@ final class ViewModel: ObservableObject {
     
     @Published var chartData = ChartData(series: [Series2D]())
     
-    func seriesFromSolutions(_ solutions: [Model.AvgTempResult], name: String) -> Series2D {
+    static func seriesFromSolutions(_ solutions: [Model.AvgTempResult], name: String) -> Series2D {
         let values: [CGPoint] = solutions.map {
             solution in
             let solarMult = solution.solarMult
@@ -62,20 +70,46 @@ final class ViewModel: ObservableObject {
         return Series2D(name: name, values: values)
     }
 
-    func updateSolutions() {
-        let wrk = DispatchWorkItem {
-            let solutions = Model.getSolutions(
-                minSM: self.solarMultBounds.minVal, maxSM: self.solarMultBounds.maxVal,
-                gat0: self.gat0, numZones: Int(self.numLatBands), f: self.latHeatTransferCoeff)
-            let allSeries: [Series2D] = [
-                self.seriesFromSolutions(solutions.rising, name: "Rising"),
-                self.seriesFromSolutions(solutions.falling, name: "Falling")
-            ]
-            DispatchQueue.main.async {
-                self.chartData = ChartData(series: allSeries)
+    // Only the main thread accesses these:
+    private var pending: CalcParameters? = nil
+    private var currentRecalc: DispatchWorkItem? = nil
+    
+    private func updateWithParams(params: CalcParameters) {
+        if currentRecalc == nil {
+            // Go now.
+            let wrk = DispatchWorkItem {
+                let p = params
+                let solutions = Model.getSolutions(
+                    minSM: p.solarMultBounds.minVal, maxSM: p.solarMultBounds.maxVal,
+                    gat0: p.gat0, numZones: Int(p.numLatBands), f: p.latHeatTransferCoeff)
+                let allSeries: [Series2D] = [
+                    Self.seriesFromSolutions(solutions.rising, name: "Rising"),
+                    Self.seriesFromSolutions(solutions.falling, name: "Falling")
+                ]
+                DispatchQueue.main.async {
+                    self.chartData = ChartData(series: allSeries)
+                    self.currentRecalc = nil
+                    if self.pending != nil {
+                        // Go again.
+                        let params = self.pending!
+                        self.pending = nil
+                        self.updateWithParams(params: params)
+                    }
+                }
             }
+            currentRecalc = wrk
+            DispatchQueue.global().async(execute:wrk)
+        } else {
+            // Queue up a new request.
+            pending = params
         }
-        DispatchQueue.global().async(execute:wrk)
+    }
+
+    func updateSolutions() {
+        let params = CalcParameters(
+            numLatBands: numLatBands, latHeatTransferCoeff: latHeatTransferCoeff,
+            solarMultBounds: solarMultBounds, gat0: gat0)
+        updateWithParams(params: params)
     }
     
     func scaleMultipliersBy(_ scale: CGFloat) {
