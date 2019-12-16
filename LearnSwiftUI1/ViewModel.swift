@@ -32,6 +32,7 @@ struct CalcParameters {
     let latHeatTransferCoeff: Double
     let solarMultBounds: SolarMultRange
     let gat0: Double
+    let numSolarMultSteps: Int
 }
 
 final class ViewModel: ObservableObject {
@@ -51,6 +52,11 @@ final class ViewModel: ObservableObject {
         }
     }
     @Published var gat0: Double = -60.0 {
+        didSet {
+            updateSolutions()
+        }
+    }
+    @Published var solarMultSteps: Int = 10 {
         didSet {
             updateSolutions()
         }
@@ -81,7 +87,8 @@ final class ViewModel: ObservableObject {
                 let p = params
                 let solutions = Model.getSolutions(
                     minSM: p.solarMultBounds.minVal, maxSM: p.solarMultBounds.maxVal,
-                    gat0: p.gat0, numZones: Int(p.numLatBands), f: p.latHeatTransferCoeff)
+                    gat0: p.gat0, numZones: Int(p.numLatBands), f: p.latHeatTransferCoeff,
+                    steps: p.numSolarMultSteps)
                 let allSeries: [Series2D] = [
                     Self.seriesFromSolutions(solutions.rising, name: "Rising"),
                     Self.seriesFromSolutions(solutions.falling, name: "Falling")
@@ -108,7 +115,7 @@ final class ViewModel: ObservableObject {
     func updateSolutions() {
         let params = CalcParameters(
             numLatBands: numLatBands, latHeatTransferCoeff: latHeatTransferCoeff,
-            solarMultBounds: solarMultBounds, gat0: gat0)
+            solarMultBounds: solarMultBounds, gat0: gat0, numSolarMultSteps: solarMultSteps)
         updateWithParams(params: params)
     }
     

@@ -33,12 +33,14 @@ struct ContentView: View {
                 self.model.resetMultipliers()
             }
         
+        let labelWidth = CGFloat(128)
+        
         return Form {
             VStack(alignment: .leading) {
                 HStack {
                     Slider(value: $model.numLatBands, in: 1...90) {
                         Text("Lat Bands:")
-                            .frame(width: 84, alignment: .trailing)
+                            .frame(width: labelWidth, alignment: .trailing)
                     }
                     .frame(width: 240)
                     Text("\(model.numLatBands, specifier: "%.0f")")
@@ -48,11 +50,24 @@ struct ContentView: View {
                 HStack {
                     Slider(value: $model.latHeatTransferCoeff, in: 0.0...10.0) {
                         Text("Lateral Heat:")
-                            .frame(width: 84, alignment: .trailing)
+                            .frame(width: labelWidth, alignment: .trailing)
                     }
                     .frame(width: 240)
                     Text("\(model.latHeatTransferCoeff, specifier: "%.2f")")
                         .frame(width: 48, alignment: .trailing)
+                    Spacer()
+                }
+                // Why this?  Because the Stepper label on macOS is, unaccountably, arranged to
+                // appear on a line above the indented stepper.
+                HStack {
+                    Text("Solar mult. steps:")
+                        .frame(width: labelWidth, alignment: .trailing)
+                    Text("\(model.solarMultSteps)")
+                        .frame(width: 24, alignment: .trailing)
+                    Stepper(value: $model.solarMultSteps, in: 5...200, step: 5) {
+                        Text("")
+                    }
+                    .labelsHidden()
                     Spacer()
                 }
                 Divider()
