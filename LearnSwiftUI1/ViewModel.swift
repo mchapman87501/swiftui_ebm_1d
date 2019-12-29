@@ -21,8 +21,8 @@ struct SolarMultRange {
 }
 extension SolarMultRange {
     init() {
-        minVal = 0.1
-        maxVal = 150.0
+        minVal = 0.01
+        maxVal = 120.0
     }
 }
 
@@ -56,7 +56,7 @@ final class ViewModel: ObservableObject {
             updateSolutions()
         }
     }
-    @Published var solarMultSteps: Int = 10 {
+    @Published var solarMultSteps: Int = 30 {
         didSet {
             updateSolutions()
         }
