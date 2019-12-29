@@ -16,11 +16,12 @@ struct ChartData: Identifiable {
         var first = true
         var result = CGRect.zero
         for currSeries in series {
+            let currBounds = currSeries.bounds()
             if first {
-                result = currSeries.bounds()
+                result = currBounds
                 first = false
             } else {
-                result = result.union(currSeries.bounds())
+                result = result.union(currBounds)
             }
         }
         return result
@@ -61,7 +62,7 @@ struct ChartData: Identifiable {
         return result
     }
     
-    // Really wasteful of memory:
+    // Rescale/translate chart data to fill rect.
     func fittedTo(_ rect: CGRect) -> ChartData {
         var newSeries = [Series2D]()
         let xform = rectTransform(rect)
@@ -70,6 +71,13 @@ struct ChartData: Identifiable {
         }
         let result = ChartData(series: newSeries)
         return result
+    }
+    
+    // Convert x from view coordinates to chartdata coordinates
+    func xFitted(_ x: CGFloat, rect: CGRect) -> CGFloat {
+        let xform = rectTransform(rect).inverted()
+        let p = CGPoint(x: x, y: 0.0).applying(xform)
+        return p.x
     }
 }
 

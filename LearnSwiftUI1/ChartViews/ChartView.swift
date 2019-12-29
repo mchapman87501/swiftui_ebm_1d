@@ -8,8 +8,18 @@
 
 import SwiftUI
 
+class ObsCGFloat: ObservableObject {
+    @Published var value: CGFloat = 0.0
+}
+
 struct ChartView: View {
     var data: ChartData
+    
+    // The x coord of interested, relative to self.
+    var selectedViewX: CGFloat
+    // Output: the data x value corresponding to selectedViewX.
+    var selectedXVal: Binding<CGFloat>
+
     var palette: [Color]
 
     var body: some View {
@@ -24,13 +34,46 @@ struct ChartView: View {
                     .stroke()
                     .foregroundColor(self.seriesColor(indexedSeries))
                 }
+                // TODO vertical "selection" line
+                Path {
+                    path in
+                    path.addPath(self.selectedXPath(geom))
+                }
+                .stroke()
+                .foregroundColor(.yellow)
                 // TODO Axes
                 // TODO Legend
             }
+            // TODO Overlay vertical line at location of interest.
         }
        .foregroundColor(.white)
     }
     
+    private func selectedXPath(_ gp: GeometryProxy) -> Path {
+        let rect = gp.frame(in: .local)
+        self.updateSelectedXVal(gp)
+        let x = selectedViewX
+        let top = CGPoint(x: x, y: rect.origin.y)
+        let bottom = CGPoint(x: x, y: rect.origin.y + rect.size.height)
+        var result = Path()
+        result.move(to: top)
+        result.addLine(to: bottom)
+        return result
+    }
+    
+    private func updateSelectedXVal(_ gp: GeometryProxy) {
+        let newValue = computedXVal(gp, x: CGFloat(selectedViewX))
+        if newValue != self.selectedXVal.wrappedValue {
+            DispatchQueue.main.async {
+                self.selectedXVal.wrappedValue = newValue
+            }
+        }
+    }
+
+    private func computedXVal(_ gp: GeometryProxy, x: CGFloat) -> CGFloat {
+        return self.data.xFitted(x, rect: gp.frame(in: .local))
+    }
+
     private func fittedData(_ gp: GeometryProxy) -> ChartData {
         return data.fittedTo(gp.frame(in: .local))
     }

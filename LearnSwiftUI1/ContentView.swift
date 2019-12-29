@@ -9,8 +9,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedX = CGFloat(0.0)
     @ObservedObject var model = ViewModel()
-    
+
     var floatFmtr: NumberFormatter = {
         let f = NumberFormatter()
         f.numberStyle = .decimal
@@ -18,25 +19,9 @@ struct ContentView: View {
     }()
     
     var body: some View {
-        let mag = MagnificationGesture()
-            .onChanged {
-                mag in
-                self.model.scaleMultipliersBy(mag)
-            }
-            .onEnded {
-                mag in
-                self.model.scaleMultipliersBy(mag)
-            }
-        
-        let resetMag = TapGesture(count: 2)
-            .onEnded { _ in
-                self.model.resetMultipliers()
-            }
-        
         let labelWidth = CGFloat(128)
-        
         return Form {
-            VStack(alignment: .leading) {
+            VStack() {
                 HStack {
                     Slider(value: $model.numLatBands, in: 1...90) {
                         Text("Lat Bands:")
@@ -63,7 +48,7 @@ struct ContentView: View {
                     Text("Solar mult. steps:")
                         .frame(width: labelWidth, alignment: .trailing)
                     Text("\(model.solarMultSteps)")
-                        .frame(width: 24, alignment: .trailing)
+                        .frame(width: 36, alignment: .trailing)
                     Stepper(value: $model.solarMultSteps, in: 5...200, step: 5) {
                         Text("")
                     }
@@ -73,34 +58,36 @@ struct ContentView: View {
                 Divider()
                 
                 GeometryReader { geom in
-                    ChartView(data: self.model.chartData, palette: [.blue, .red])
+                    ChartView(data: self.model.chartData, selectedViewX: self.selectedX, selectedXVal: self.$model.selectedSolarMult, palette: [.blue, .red])
                         .frame(minWidth: 240, minHeight: 240)
                         .foregroundColor(.white)
-                        .gesture(mag)
-                        .gesture(resetMag)
                         .gesture(DragGesture()
-                            .onChanged { info in
-                                let dxRaw = info.location.x - info.startLocation.x
-                                let dxFract = -dxRaw / geom.frame(in: .local).width
-                                // TODO let shiftMultipliers distinguish between "transient" and "final" changes.
-                                self.model.shiftMultipliers(dxFract)
-                            }
-                            .onEnded { info in
-                                let dxRaw = info.location.x - info.startLocation.x
-                                let dxFract = -dxRaw / geom.frame(in: .local).width
-                                self.model.shiftMultipliers(dxFract)
+                            .onChanged { value in
+                                let loc = value.location
+                                let frame = geom.frame(in: .local)
+                                // Get the fractional x coord of loc.
+                                let offset = loc.x - frame.origin.x
+                                self.selectedX = CGFloat(offset)
                             })
                 }
 
                 HStack {
                     Spacer()
-                    Rectangle()
-                        .frame(minHeight: 128)
-                        .aspectRatio(CGSize(width: 1, height: 1), contentMode: .fit)
+                    VStack {
+                        Text("Rising")
+                            .foregroundColor(.blue)
+                        GlobeView(albedos: model.albedos.risingAlbedos)
+                            .frame(minHeight: 128)
+                            .aspectRatio(CGSize(width: 1, height: 1), contentMode: .fit)
+                    }
                     Spacer()
-                    Rectangle()
-                        .frame(minHeight: 128)
-                        .aspectRatio(CGSize(width: 1, height: 1), contentMode: .fit)
+                    VStack {
+                        Text("Falling")
+                            .foregroundColor(.red)
+                        GlobeView(albedos: self.model.albedos.fallingAlbedos)
+                            .frame(minHeight: 128)
+                            .aspectRatio(CGSize(width: 1, height: 1), contentMode: .fit)
+                    }
                     Spacer()
                 }
             }
@@ -113,6 +100,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        return ContentView()
     }
 }

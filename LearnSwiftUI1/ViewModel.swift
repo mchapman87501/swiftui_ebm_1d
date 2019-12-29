@@ -62,8 +62,14 @@ final class ViewModel: ObservableObject {
         }
     }
     // TODO Add frozen/thawed albedos and critical temperature.
-    
+    @Published var solutions = Model.Result()
     @Published var chartData = ChartData(series: [Series2D]())
+    @Published var albedos: AlbedoViewModel
+    @Published var selectedSolarMult = CGFloat(1.0) {
+        didSet {
+            updateAlbedos()
+        }
+    }
     
     static func seriesFromSolutions(_ solutions: [Model.AvgTempResult], name: String) -> Series2D {
         let values: [CGPoint] = solutions.map {
@@ -72,10 +78,10 @@ final class ViewModel: ObservableObject {
             let gat = solution.solution.avg
             return CGPoint(x: solarMult, y: gat)
         }
-
+        
         return Series2D(name: name, values: values)
     }
-
+    
     // Only the main thread accesses these:
     private var pending: CalcParameters? = nil
     private var currentRecalc: DispatchWorkItem? = nil
@@ -85,16 +91,18 @@ final class ViewModel: ObservableObject {
             // Go now.
             let wrk = DispatchWorkItem {
                 let p = params
-                let solutions = Model.getSolutions(
+                let newSolutions = Model.getSolutions(
                     minSM: p.solarMultBounds.minVal, maxSM: p.solarMultBounds.maxVal,
                     gat0: p.gat0, numZones: Int(p.numLatBands), f: p.latHeatTransferCoeff,
                     steps: p.numSolarMultSteps)
                 let allSeries: [Series2D] = [
-                    Self.seriesFromSolutions(solutions.rising, name: "Rising"),
-                    Self.seriesFromSolutions(solutions.falling, name: "Falling")
+                    Self.seriesFromSolutions(newSolutions.rising, name: "Rising"),
+                    Self.seriesFromSolutions(newSolutions.falling, name: "Falling")
                 ]
                 DispatchQueue.main.async {
+                    self.solutions = newSolutions
                     self.chartData = ChartData(series: allSeries)
+                    self.albedos = AlbedoViewModel(solutions: newSolutions, selectedSolarMult: self.selectedSolarMult)
                     self.currentRecalc = nil
                     if self.pending != nil {
                         // Go again.
@@ -117,6 +125,12 @@ final class ViewModel: ObservableObject {
             numLatBands: numLatBands, latHeatTransferCoeff: latHeatTransferCoeff,
             solarMultBounds: solarMultBounds, gat0: gat0, numSolarMultSteps: solarMultSteps)
         updateWithParams(params: params)
+    }
+    
+    func updateAlbedos() {
+        DispatchQueue.main.async {
+            self.albedos = AlbedoViewModel(solutions: self.solutions, selectedSolarMult: self.selectedSolarMult)
+        }
     }
     
     func scaleMultipliersBy(_ scale: CGFloat) {
@@ -147,6 +161,9 @@ final class ViewModel: ObservableObject {
         latHeatTransferCoeff = 7.6
         solarMultBounds = SolarMultRange()
         gat0 = -60.0
+        let selectedSolarMult = CGFloat(1.0)
+        self.selectedSolarMult = selectedSolarMult
+        albedos = AlbedoViewModel(solutions: Model.Result(), selectedSolarMult: selectedSolarMult)
         updateSolutions()
     }
 }
