@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FD17D3C82380A9AC0013353F /* LearnSwiftUI1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearnSwiftUI1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FD17D3C82380A9AC0013353F /* EBM1D.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EBM1D.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD17D3CB2380A9AC0013353F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FD17D3CD2380A9AC0013353F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FD17D3CF2380A9AE0013353F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -58,7 +58,7 @@
 		FD17D3BF2380A9AC0013353F = {
 			isa = PBXGroup;
 			children = (
-				FD17D3CA2380A9AC0013353F /* LearnSwiftUI1 */,
+				FD17D3CA2380A9AC0013353F /* EBM1D */,
 				FD17D3C92380A9AC0013353F /* Products */,
 				FD8302E9239F3BBB004F142E /* Frameworks */,
 			);
@@ -67,12 +67,12 @@
 		FD17D3C92380A9AC0013353F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FD17D3C82380A9AC0013353F /* LearnSwiftUI1.app */,
+				FD17D3C82380A9AC0013353F /* EBM1D.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		FD17D3CA2380A9AC0013353F /* LearnSwiftUI1 */ = {
+		FD17D3CA2380A9AC0013353F /* EBM1D */ = {
 			isa = PBXGroup;
 			children = (
 				FD3E1A1F23A1D9290084BF4F /* ChartViews */,
@@ -88,7 +88,7 @@
 				FD17D3D82380A9AE0013353F /* LearnSwiftUI1.entitlements */,
 				FD17D3D12380A9AE0013353F /* Preview Content */,
 			);
-			path = LearnSwiftUI1;
+			path = EBM1D;
 			sourceTree = "<group>";
 		};
 		FD17D3D12380A9AE0013353F /* Preview Content */ = {
@@ -121,9 +121,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		FD17D3C72380A9AC0013353F /* LearnSwiftUI1 */ = {
+		FD17D3C72380A9AC0013353F /* EBM1D */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FD17D3DB2380A9AE0013353F /* Build configuration list for PBXNativeTarget "LearnSwiftUI1" */;
+			buildConfigurationList = FD17D3DB2380A9AE0013353F /* Build configuration list for PBXNativeTarget "EBM1D" */;
 			buildPhases = (
 				FD17D3C42380A9AC0013353F /* Sources */,
 				FD17D3C52380A9AC0013353F /* Frameworks */,
@@ -133,12 +133,12 @@
 			);
 			dependencies = (
 			);
-			name = LearnSwiftUI1;
+			name = EBM1D;
 			packageProductDependencies = (
 				FD3E1A1523A0B3020084BF4F /* ebm1dLib */,
 			);
 			productName = LearnSwiftUI1;
-			productReference = FD17D3C82380A9AC0013353F /* LearnSwiftUI1.app */;
+			productReference = FD17D3C82380A9AC0013353F /* EBM1D.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -156,7 +156,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FD17D3C32380A9AC0013353F /* Build configuration list for PBXProject "LearnSwiftUI1" */;
+			buildConfigurationList = FD17D3C32380A9AC0013353F /* Build configuration list for PBXProject "EBM1D" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -169,7 +169,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				FD17D3C72380A9AC0013353F /* LearnSwiftUI1 */,
+				FD17D3C72380A9AC0013353F /* EBM1D */,
 			);
 		};
 /* End PBXProject section */
@@ -336,19 +336,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = LearnSwiftUI1/LearnSwiftUI1.entitlements;
+				CODE_SIGN_ENTITLEMENTS = EBM1D/EBM1D.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"LearnSwiftUI1/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"EBM1D/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = LearnSwiftUI1/Info.plist;
+				INFOPLIST_FILE = EBM1D/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dmoonc.LearnSwiftUI1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dmoonc.EBM1D;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -358,19 +358,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = LearnSwiftUI1/LearnSwiftUI1.entitlements;
+				CODE_SIGN_ENTITLEMENTS = EBM1D/EBM1D.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"LearnSwiftUI1/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"EBM1D/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = LearnSwiftUI1/Info.plist;
+				INFOPLIST_FILE = EBM1D/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dmoonc.LearnSwiftUI1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dmoonc.EBM1D;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -379,7 +379,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FD17D3C32380A9AC0013353F /* Build configuration list for PBXProject "LearnSwiftUI1" */ = {
+		FD17D3C32380A9AC0013353F /* Build configuration list for PBXProject "EBM1D" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FD17D3D92380A9AE0013353F /* Debug */,
@@ -388,7 +388,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FD17D3DB2380A9AE0013353F /* Build configuration list for PBXNativeTarget "LearnSwiftUI1" */ = {
+		FD17D3DB2380A9AE0013353F /* Build configuration list for PBXNativeTarget "EBM1D" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FD17D3DC2380A9AE0013353F /* Debug */,
