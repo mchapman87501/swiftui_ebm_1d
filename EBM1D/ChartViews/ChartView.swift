@@ -8,8 +8,34 @@
 
 import SwiftUI
 
-class ObsCGFloat: ObservableObject {
-    @Published var value: CGFloat = 0.0
+struct FittedPaths {
+    let geom: GeometryProxy
+    let data: ChartData
+    
+    struct SeriesPath: Identifiable {
+        let id = UUID()
+        let index: Int
+        let path: Path
+    }
+
+    private func seriesPath(_ dataSeries: Series2D) -> Path {
+        var result = Path()
+        
+        let points = dataSeries.values
+        guard points.count > 0 else { return result }
+        
+        for i in 1..<points.count {
+            result.move(to: points[i - 1])
+            result.addLine(to: points[i])
+        }
+        return result
+    }
+    
+    func paths() -> [SeriesPath] {
+        let fitted = data.fittedTo(geom.frame(in: .local))
+        let paths = fitted.series.map { seriesPath($0) }
+        return paths.enumerated().map { i, p in SeriesPath(index: i, path: p) }
+    }
 }
 
 struct ChartView: View {
@@ -27,24 +53,20 @@ struct ChartView: View {
             Rectangle()
                 .foregroundColor(.white)
             GeometryReader { geom in
-                ForEach(self.fittedSeries(geom)) { indexedSeries in
-                    Path { path in
-                        self.fillFromSeries(path: &path, indexedSeries)
-                    }
+                ForEach(FittedPaths(geom: geom, data: self.data).paths()) { rec in
+                    rec.path
                     .stroke()
-                    .foregroundColor(self.seriesColor(indexedSeries))
+                    .foregroundColor(self.seriesColor(rec.index))
                 }
-                // TODO vertical "selection" line
+                // vertical "selection" line
                 Path {
-                    path in
-                    path.addPath(self.selectedXPath(geom))
+                    $0.addPath(self.selectedXPath(geom))
                 }
                 .stroke()
                 .foregroundColor(.yellow)
                 // TODO Axes
                 // TODO Legend
             }
-            // TODO Overlay vertical line at location of interest.
         }
        .foregroundColor(.white)
     }
@@ -74,33 +96,8 @@ struct ChartView: View {
         return self.data.xFitted(x, rect: gp.frame(in: .local))
     }
 
-    private func fittedData(_ gp: GeometryProxy) -> ChartData {
-        return data.fittedTo(gp.frame(in: .local))
-    }
-    
-    struct IndexedSeries: Identifiable {
-        var id: UUID { get { s2d.id } }
-        let index: Int
-        let s2d: Series2D
-    }
-    
-    private func fittedSeries(_ gp: GeometryProxy) -> [IndexedSeries] {
-        return fittedData(gp).series.enumerated().map{ i, v in IndexedSeries(index: i, s2d: v) }
-    }
-    
-    private func fillFromSeries(path: inout Path, _ indexedSeries: IndexedSeries) {
-        let dataSeries = indexedSeries.s2d
-        let points = dataSeries.values
-        guard points.count > 0 else { return }
-        
-        for i in 1..<points.count {
-            path.move(to: points[i - 1])
-            path.addLine(to: points[i])
-        }
-    }
-    
-    private func seriesColor(_ indexedSeries: IndexedSeries) -> Color {
-        return palette[indexedSeries.index % palette.count]
+    private func seriesColor(_ index: Int) -> Color {
+        return palette[index % palette.count]
     }
 }
 
