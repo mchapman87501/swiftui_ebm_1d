@@ -75,7 +75,7 @@ final class ViewModel: ObservableObject {
         let values: [CGPoint] = solutions.map {
             solution in
             let solarMult = solution.solarMult
-            let gat = solution.solution.avg
+            let gat = solution.avg
             return CGPoint(x: solarMult, y: gat)
         }
         

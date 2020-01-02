@@ -29,7 +29,7 @@ class AlbedoViewModel: ObservableObject {
         }
         
         return solutions.map { solution in
-            AlbedosForSolarMult(solarMult: solution.solarMult, albedos: solution.solution.albedos)
+            AlbedosForSolarMult(solarMult: solution.solarMult, albedos: solution.albedos)
         }
     }
 
