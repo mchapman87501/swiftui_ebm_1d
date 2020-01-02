@@ -14,7 +14,7 @@ import SceneKit
 
 struct GlobeView: NSViewRepresentable {
     var albedos = [Double]()
-    
+
     func makeNSView(context: NSViewRepresentableContext<GlobeView>) -> SCNView {
         let sceneView = SCNView()
         sceneView.scene = SCNScene()
@@ -22,25 +22,24 @@ struct GlobeView: NSViewRepresentable {
         sceneView.autoenablesDefaultLighting = true
         sceneView.backgroundColor = NSColor.black
         sceneView.frame = CGRect(x: 0.0, y: 0.0, width: 128, height: 128)
-        
+
         return sceneView
     }
-    
+
     func updateNSView(_ nsView: SCNView, context: NSViewRepresentableContext<GlobeView>) {
         eraseNodes(nsView)
-        // TODO recolor the globe?
         let globe = SCNSphere(radius: 10.0)
         let globeNode = SCNNode(geometry: globe)
         globeNode.position = SCNVector3(x: 0.0, y: 0.0, z: 3.0)
-        
+
         let textureImg = AlbedoImgMaker.imageFromAlbedos(albedos)
         globe.firstMaterial?.diffuse.contents = textureImg
-        
+
         nsView.scene?.rootNode.addChildNode(globeNode)
     }
-    
+
     func eraseNodes(_ nsView: SCNView) {
-        nsView.scene?.rootNode.enumerateChildNodes { (node, stop) in
+        nsView.scene?.rootNode.enumerateChildNodes { (node, _) in
             node.removeFromParentNode()
         }
     }

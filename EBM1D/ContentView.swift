@@ -13,15 +13,15 @@ struct ContentView: View {
     @ObservedObject var model = ViewModel()
 
     var floatFmtr: NumberFormatter = {
-        let f = NumberFormatter()
-        f.numberStyle = .decimal
-        return f
+        let result = NumberFormatter()
+        result.numberStyle = .decimal
+        return result
     }()
-    
+
     var body: some View {
         let labelWidth = CGFloat(128)
         return Form {
-            VStack() {
+            VStack {
                 HStack {
                     Slider(value: $model.numLatBands, in: 1...90) {
                         Text("Lat Bands:")
@@ -56,9 +56,12 @@ struct ContentView: View {
                     Spacer()
                 }
                 Divider()
-                
+
                 GeometryReader { geom in
-                    ChartView(data: self.model.chartData, selectedViewX: self.selectedX, selectedXVal: self.$model.selectedSolarMult, palette: Palette([.blue, .red]))
+                    ChartView(data: self.model.chartData,
+                              selectedViewX: self.selectedX,
+                              selectedXVal: self.$model.selectedSolarMult,
+                              palette: Palette([.blue, .red]))
                         .frame(minWidth: 240, minHeight: 240)
                         .foregroundColor(.white)
                         .gesture(DragGesture()
@@ -96,7 +99,6 @@ struct ContentView: View {
         .frame(minWidth: 640, minHeight: 640)
     }
 }
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

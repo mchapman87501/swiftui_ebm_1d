@@ -56,7 +56,7 @@ struct ChartView: View {
                 ForEach(FittedPaths(geom: geom, data: self.data).paths()) { rec in
                     rec.path
                     .stroke()
-                        .foregroundColor(self.palette.color(rec.index))
+                    .foregroundColor(self.palette.color(rec.index))
                 }
                 // vertical "selection" line
                 Path {

@@ -22,12 +22,12 @@ class AlbedoViewModel: ObservableObject {
 
     @Published var risingAlbedos = [Double]()
     @Published var fallingAlbedos = [Double]()
-    
+
     static func albedosFromSolutions(_ solutions: [Model.AvgTempResult]) -> AlbedoSeries {
         guard solutions.count > 0 else {
             return []
         }
-        
+
         return solutions.map { solution in
             AlbedosForSolarMult(solarMult: solution.solarMult, albedos: solution.albedos)
         }
@@ -35,14 +35,14 @@ class AlbedoViewModel: ObservableObject {
 
     static func nearestAlbedos(solarMult: CGFloat, albedos: AlbedoSeries) -> [Double] {
         var result = [Double]()
-        let sm = Double(solarMult)
+        let mult = Double(solarMult)
         var minDist = 0.0
-        for (i, record) in albedos.enumerated() {
-            if i == 0 {
-                minDist = fabs(record.solarMult - sm)
+        for (index, record) in albedos.enumerated() {
+            if index == 0 {
+                minDist = fabs(record.solarMult - mult)
                 result = record.albedos
             } else {
-                let dist = fabs(record.solarMult - sm)
+                let dist = fabs(record.solarMult - mult)
                 if dist < minDist {
                     minDist = dist
                     result = record.albedos
