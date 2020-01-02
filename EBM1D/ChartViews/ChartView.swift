@@ -46,7 +46,7 @@ struct ChartView: View {
     // Output: the data x value corresponding to selectedViewX.
     var selectedXVal: Binding<CGFloat>
 
-    var palette: [Color]
+    var palette: Palette
 
     var body: some View {
         ZStack {
@@ -56,7 +56,7 @@ struct ChartView: View {
                 ForEach(FittedPaths(geom: geom, data: self.data).paths()) { rec in
                     rec.path
                     .stroke()
-                    .foregroundColor(self.seriesColor(rec.index))
+                        .foregroundColor(self.palette.color(rec.index))
                 }
                 // vertical "selection" line
                 Path {
@@ -94,10 +94,6 @@ struct ChartView: View {
 
     private func computedXVal(_ gp: GeometryProxy, x: CGFloat) -> CGFloat {
         return self.data.xFitted(x, rect: gp.frame(in: .local))
-    }
-
-    private func seriesColor(_ index: Int) -> Color {
-        return palette[index % palette.count]
     }
 }
 
