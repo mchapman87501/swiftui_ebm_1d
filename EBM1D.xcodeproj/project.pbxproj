@@ -57,6 +57,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FD02F90923C2174400F4AABC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				FD830303239F3F9B004F142E /* ViewModel.swift */,
+				FDB5CAA923B942A4007D17C3 /* AlbedoViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		FD02F90A23C2176500F4AABC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FD3E1A1F23A1D9290084BF4F /* ChartViews */,
+				FD17D3CD2380A9AC0013353F /* ContentView.swift */,
+				FDED5F2B23A7C44F0099163B /* GlobeView.swift */,
+				FDED5F2F23A8775D0099163B /* AlbedoImgMaker.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		FD17D3BF2380A9AC0013353F = {
 			isa = PBXGroup;
 			children = (
@@ -77,13 +97,9 @@
 		FD17D3CA2380A9AC0013353F /* EBM1D */ = {
 			isa = PBXGroup;
 			children = (
-				FD3E1A1F23A1D9290084BF4F /* ChartViews */,
+				FD02F90A23C2176500F4AABC /* Views */,
+				FD02F90923C2174400F4AABC /* ViewModels */,
 				FD17D3CB2380A9AC0013353F /* AppDelegate.swift */,
-				FD17D3CD2380A9AC0013353F /* ContentView.swift */,
-				FDED5F2B23A7C44F0099163B /* GlobeView.swift */,
-				FDED5F2F23A8775D0099163B /* AlbedoImgMaker.swift */,
-				FD830303239F3F9B004F142E /* ViewModel.swift */,
-				FDB5CAA923B942A4007D17C3 /* AlbedoViewModel.swift */,
 				FD17D3CF2380A9AE0013353F /* Assets.xcassets */,
 				FD17D3D42380A9AE0013353F /* Main.storyboard */,
 				FD17D3D72380A9AE0013353F /* Info.plist */,
