@@ -52,6 +52,7 @@ struct ChartView: View {
                 HStack(spacing: 0.0) {
                     YAxisView(model: self.yAxModel())
                         .frame(width: self.yAxisWidth(), height: self.graphHeight(geom))
+                        .animation(.default)
                     ChartDataView(data: self.model.chartData,
                               selectedViewX: self.selectedX,
                               selectedXVal: self.$model.selectedSolarMult,

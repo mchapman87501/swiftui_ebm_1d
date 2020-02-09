@@ -1,6 +1,6 @@
 //
 //  XAxisView.swift
-//  graphlayout2
+//  EBM1D
 //
 //  Created by Mitchell Chapman on 2/9/20.
 //  Copyright © 2020 Mitchell Chapman. All rights reserved.
