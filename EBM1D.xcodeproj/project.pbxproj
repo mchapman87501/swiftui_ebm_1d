@@ -16,10 +16,14 @@
 		FD3E1A2423A1D94E0084BF4F /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2023A1D94E0084BF4F /* ChartData.swift */; };
 		FD3E1A2523A1D94E0084BF4F /* Series2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2123A1D94E0084BF4F /* Series2D.swift */; };
 		FD3E1A2623A1D94E0084BF4F /* AxisLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift */; };
-		FD3E1A2723A1D94E0084BF4F /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2323A1D94E0084BF4F /* ChartView.swift */; };
+		FD3E1A2723A1D94E0084BF4F /* ChartDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2323A1D94E0084BF4F /* ChartDataView.swift */; };
 		FD7946EC23BE31B6006D5297 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7946EB23BE31B6006D5297 /* Palette.swift */; };
 		FD830304239F3F9B004F142E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD830303239F3F9B004F142E /* ViewModel.swift */; };
 		FDB5CAAA23B942A4007D17C3 /* AlbedoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDB5CAA923B942A4007D17C3 /* AlbedoViewModel.swift */; };
+		FDD0BC1323F064D500A34622 /* YAxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD0BC1023F064D400A34622 /* YAxisView.swift */; };
+		FDD0BC1423F064D500A34622 /* AxisViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD0BC1123F064D500A34622 /* AxisViewModel.swift */; };
+		FDD0BC1523F064D500A34622 /* XAxisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD0BC1223F064D500A34622 /* XAxisView.swift */; };
+		FDD0BC1723F065AF00A34622 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDD0BC1623F065AF00A34622 /* ChartView.swift */; };
 		FDED5F2C23A7C44F0099163B /* GlobeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED5F2B23A7C44F0099163B /* GlobeView.swift */; };
 		FDED5F3023A8775D0099163B /* AlbedoImgMaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDED5F2F23A8775D0099163B /* AlbedoImgMaker.swift */; };
 /* End PBXBuildFile section */
@@ -37,10 +41,14 @@
 		FD3E1A2023A1D94E0084BF4F /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
 		FD3E1A2123A1D94E0084BF4F /* Series2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Series2D.swift; sourceTree = "<group>"; };
 		FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisLimits.swift; sourceTree = "<group>"; };
-		FD3E1A2323A1D94E0084BF4F /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		FD3E1A2323A1D94E0084BF4F /* ChartDataView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataView.swift; sourceTree = "<group>"; };
 		FD7946EB23BE31B6006D5297 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		FD830303239F3F9B004F142E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		FDB5CAA923B942A4007D17C3 /* AlbedoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbedoViewModel.swift; sourceTree = "<group>"; };
+		FDD0BC1023F064D400A34622 /* YAxisView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YAxisView.swift; sourceTree = "<group>"; };
+		FDD0BC1123F064D500A34622 /* AxisViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisViewModel.swift; sourceTree = "<group>"; };
+		FDD0BC1223F064D500A34622 /* XAxisView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XAxisView.swift; sourceTree = "<group>"; };
+		FDD0BC1623F065AF00A34622 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		FDED5F2B23A7C44F0099163B /* GlobeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeView.swift; sourceTree = "<group>"; };
 		FDED5F2F23A8775D0099163B /* AlbedoImgMaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbedoImgMaker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,11 +128,15 @@
 		FD3E1A1F23A1D9290084BF4F /* ChartViews */ = {
 			isa = PBXGroup;
 			children = (
+				FDD0BC1123F064D500A34622 /* AxisViewModel.swift */,
+				FDD0BC1223F064D500A34622 /* XAxisView.swift */,
+				FDD0BC1023F064D400A34622 /* YAxisView.swift */,
 				FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift */,
 				FD3E1A2023A1D94E0084BF4F /* ChartData.swift */,
-				FD3E1A2323A1D94E0084BF4F /* ChartView.swift */,
+				FD3E1A2323A1D94E0084BF4F /* ChartDataView.swift */,
 				FD7946EB23BE31B6006D5297 /* Palette.swift */,
 				FD3E1A2123A1D94E0084BF4F /* Series2D.swift */,
+				FDD0BC1623F065AF00A34622 /* ChartView.swift */,
 			);
 			path = ChartViews;
 			sourceTree = "<group>";
@@ -215,13 +227,17 @@
 				FD7946EC23BE31B6006D5297 /* Palette.swift in Sources */,
 				FD3E1A2623A1D94E0084BF4F /* AxisLimits.swift in Sources */,
 				FD17D3CE2380A9AC0013353F /* ContentView.swift in Sources */,
-				FD3E1A2723A1D94E0084BF4F /* ChartView.swift in Sources */,
+				FDD0BC1423F064D500A34622 /* AxisViewModel.swift in Sources */,
+				FD3E1A2723A1D94E0084BF4F /* ChartDataView.swift in Sources */,
 				FD17D3CC2380A9AC0013353F /* AppDelegate.swift in Sources */,
 				FDB5CAAA23B942A4007D17C3 /* AlbedoViewModel.swift in Sources */,
+				FDD0BC1723F065AF00A34622 /* ChartView.swift in Sources */,
 				FDED5F3023A8775D0099163B /* AlbedoImgMaker.swift in Sources */,
 				FD3E1A2423A1D94E0084BF4F /* ChartData.swift in Sources */,
 				FDED5F2C23A7C44F0099163B /* GlobeView.swift in Sources */,
 				FD830304239F3F9B004F142E /* ViewModel.swift in Sources */,
+				FDD0BC1523F064D500A34622 /* XAxisView.swift in Sources */,
+				FDD0BC1323F064D500A34622 /* YAxisView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

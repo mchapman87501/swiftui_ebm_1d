@@ -1,99 +1,86 @@
 //
 //  ChartView.swift
-//  LearnSUIShape
+//  EBM1D
 //
-//  Created by Mitchell Chapman on 12/11/19.
-//  Copyright © 2019 Desert Moon Consulting, LLC. All rights reserved.
+//  Created by Mitchell Chapman on 2/9/20.
+//  Copyright © 2020 Desert Moon Consulting, LLC. All rights reserved.
 //
 
 import SwiftUI
 
-struct FittedPaths {
-    let geom: GeometryProxy
-    let data: ChartData
-    
-    struct SeriesPath: Identifiable {
-        let id = UUID()
-        let index: Int
-        let path: Path
-    }
-
-    private func seriesPath(_ dataSeries: Series2D) -> Path {
-        var result = Path()
-        
-        let points = dataSeries.values
-        guard points.count > 0 else { return result }
-        
-        for i in 1..<points.count {
-            result.move(to: points[i - 1])
-            result.addLine(to: points[i])
-        }
-        return result
-    }
-    
-    func paths() -> [SeriesPath] {
-        let fitted = data.fittedTo(geom.frame(in: .local))
-        let paths = fitted.series.map { seriesPath($0) }
-        return paths.enumerated().map { i, p in SeriesPath(index: i, path: p) }
-    }
-}
-
 struct ChartView: View {
-    var data: ChartData
+    @State private var selectedX = CGFloat(0.0)
+    // TODO should not know of the "global" ViewModel - use a ChartViewModel
+    @ObservedObject var model: ViewModel
     
-    // The x coord of interested, relative to self.
-    var selectedViewX: CGFloat
-    // Output: the data x value corresponding to selectedViewX.
-    var selectedXVal: Binding<CGFloat>
+    
+    func xAxModel() -> AxisViewModel {
+        let bounds = model.chartData.roundedBounds()
+        return AxisViewModel(vMin: bounds.minX, vMax: bounds.maxX)
+    }
 
-    var palette: Palette
+    func yAxModel() -> AxisViewModel {
+        let bounds = model.chartData.roundedBounds()
+        return AxisViewModel(vMin: bounds.minY, vMax: bounds.maxY)
+    }
+
+    func yAxisWidth() -> CGFloat {
+        // TODO learn how to compute natural width of
+        // longest tick label
+        return 50.0
+    }
+
+    func xAxisHeight() -> CGFloat {
+        // TODO learn how to compute natural height of
+        // tick labels
+        return 36.0
+    }
+    
+    func graphWidth(_ geom: GeometryProxy) -> CGFloat {
+        let result = geom.size.width - yAxisWidth()
+        return (result > 0) ? result : 0.0
+    }
+    
+    func graphHeight(_ geom: GeometryProxy) -> CGFloat {
+        let result = geom.size.height - xAxisHeight()
+        return (result > 0) ? result : 0.0
+    }
 
     var body: some View {
-        ZStack {
-            Rectangle()
-                .foregroundColor(.white)
-            GeometryReader { geom in
-                ForEach(FittedPaths(geom: geom, data: self.data).paths()) { rec in
-                    rec.path
-                    .stroke()
-                    .foregroundColor(self.palette.color(rec.index))
+        GeometryReader { geom in
+            VStack(spacing: 0.0) {
+                HStack(spacing: 0.0) {
+                    YAxisView(model: self.yAxModel())
+                        .frame(width: self.yAxisWidth(), height: self.graphHeight(geom))
+                    ChartDataView(data: self.model.chartData,
+                              selectedViewX: self.selectedX,
+                              selectedXVal: self.$model.selectedSolarMult,
+                              palette: Palette([.blue, .red]))
+                        .frame(width: self.graphWidth(geom), height: self.graphHeight(geom))
+                        .foregroundColor(.white)
+                        .gesture(DragGesture()
+                            .onChanged { value in
+                                let loc = value.location
+                                let frame = geom.frame(in: .local)
+                                // Get the fractional x coord of loc.
+                                let offset = loc.x - frame.origin.x
+                                self.selectedX = CGFloat(offset)
+                            })
                 }
-                // vertical "selection" line
-                Path {
-                    $0.addPath(self.selectedXPath(geom))
+                .zIndex(1.0)
+                HStack(spacing: 0.0) {
+                    Spacer()
+                    XAxisView(model: self.xAxModel())
+                        .frame(width: self.graphWidth(geom), height: self.xAxisHeight())
+                    
                 }
-                .stroke()
-                .foregroundColor(.yellow)
-                // TODO Axes
-                // TODO Legend
-            }
+            }.clipped()
         }
-       .foregroundColor(.white)
-    }
-    
-    private func selectedXPath(_ gp: GeometryProxy) -> Path {
-        let rect = gp.frame(in: .local)
-        self.updateSelectedXVal(gp)
-        let x = selectedViewX
-        let top = CGPoint(x: x, y: rect.origin.y)
-        let bottom = CGPoint(x: x, y: rect.origin.y + rect.size.height)
-        var result = Path()
-        result.move(to: top)
-        result.addLine(to: bottom)
-        return result
-    }
-    
-    private func updateSelectedXVal(_ gp: GeometryProxy) {
-        let newValue = computedXVal(gp, x: CGFloat(selectedViewX))
-        if newValue != self.selectedXVal.wrappedValue {
-            DispatchQueue.main.async {
-                self.selectedXVal.wrappedValue = newValue
-            }
-        }
-    }
-
-    private func computedXVal(_ gp: GeometryProxy, x: CGFloat) -> CGFloat {
-        return self.data.xFitted(x, rect: gp.frame(in: .local))
     }
 }
 
+struct ChartView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChartView(model: ViewModel())
+    }
+}

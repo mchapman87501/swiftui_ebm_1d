@@ -58,12 +58,8 @@ struct ContentView: View {
                 Divider()
 
                 GeometryReader { geom in
-                    ChartView(data: self.model.chartData,
-                              selectedViewX: self.selectedX,
-                              selectedXVal: self.$model.selectedSolarMult,
-                              palette: Palette([.blue, .red]))
+                    ChartView(model: self.model)
                         .frame(minWidth: 240, minHeight: 240)
-                        .foregroundColor(.white)
                         .gesture(DragGesture()
                             .onChanged { value in
                                 let loc = value.location
