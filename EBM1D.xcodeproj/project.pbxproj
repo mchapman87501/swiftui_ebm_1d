@@ -15,7 +15,7 @@
 		FD3E1A1623A0B3020084BF4F /* ebm1dLib in Frameworks */ = {isa = PBXBuildFile; productRef = FD3E1A1523A0B3020084BF4F /* ebm1dLib */; };
 		FD3E1A2423A1D94E0084BF4F /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2023A1D94E0084BF4F /* ChartData.swift */; };
 		FD3E1A2523A1D94E0084BF4F /* Series2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2123A1D94E0084BF4F /* Series2D.swift */; };
-		FD3E1A2623A1D94E0084BF4F /* AxisLimits.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift.swift */; };
+		FD3E1A2623A1D94E0084BF4F /* AxisLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift */; };
 		FD3E1A2723A1D94E0084BF4F /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD3E1A2323A1D94E0084BF4F /* ChartView.swift */; };
 		FD7946EC23BE31B6006D5297 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7946EB23BE31B6006D5297 /* Palette.swift */; };
 		FD830304239F3F9B004F142E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD830303239F3F9B004F142E /* ViewModel.swift */; };
@@ -36,7 +36,7 @@
 		FD3E1A1423A0B2EB0084BF4F /* ebm1d */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ebm1d; path = ../ebm1d; sourceTree = "<group>"; };
 		FD3E1A2023A1D94E0084BF4F /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
 		FD3E1A2123A1D94E0084BF4F /* Series2D.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Series2D.swift; sourceTree = "<group>"; };
-		FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisLimits.swift.swift; sourceTree = "<group>"; };
+		FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AxisLimits.swift; sourceTree = "<group>"; };
 		FD3E1A2323A1D94E0084BF4F /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		FD7946EB23BE31B6006D5297 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
 		FD830303239F3F9B004F142E /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 		FD3E1A1F23A1D9290084BF4F /* ChartViews */ = {
 			isa = PBXGroup;
 			children = (
-				FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift.swift */,
+				FD3E1A2223A1D94E0084BF4F /* AxisLimits.swift */,
 				FD3E1A2023A1D94E0084BF4F /* ChartData.swift */,
 				FD3E1A2323A1D94E0084BF4F /* ChartView.swift */,
 				FD7946EB23BE31B6006D5297 /* Palette.swift */,
@@ -213,7 +213,7 @@
 			files = (
 				FD3E1A2523A1D94E0084BF4F /* Series2D.swift in Sources */,
 				FD7946EC23BE31B6006D5297 /* Palette.swift in Sources */,
-				FD3E1A2623A1D94E0084BF4F /* AxisLimits.swift.swift in Sources */,
+				FD3E1A2623A1D94E0084BF4F /* AxisLimits.swift in Sources */,
 				FD17D3CE2380A9AC0013353F /* ContentView.swift in Sources */,
 				FD3E1A2723A1D94E0084BF4F /* ChartView.swift in Sources */,
 				FD17D3CC2380A9AC0013353F /* AppDelegate.swift in Sources */,
