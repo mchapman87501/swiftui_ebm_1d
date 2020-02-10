@@ -11,7 +11,7 @@ import SwiftUI
 struct FittedPaths {
     let geom: GeometryProxy
     let data: ChartData
-    
+
     struct SeriesPath: Identifiable {
         let id = UUID()
         let index: Int
@@ -20,17 +20,17 @@ struct FittedPaths {
 
     private func seriesPath(_ dataSeries: Series2D) -> Path {
         var result = Path()
-        
+
         let points = dataSeries.values
         guard points.count > 0 else { return result }
-        
+
         for i in 1..<points.count {
             result.move(to: points[i - 1])
             result.addLine(to: points[i])
         }
         return result
     }
-    
+
     func paths() -> [SeriesPath] {
         let fitted = data.fittedTo(geom.frame(in: .local))
         let paths = fitted.series.map { seriesPath($0) }
@@ -40,7 +40,7 @@ struct FittedPaths {
 
 struct ChartDataView: View {
     var data: ChartData
-    
+
     // The x coord of interested, relative to self.
     var selectedViewX: CGFloat
     // Output: the data x value corresponding to selectedViewX.
@@ -64,13 +64,11 @@ struct ChartDataView: View {
                 }
                 .stroke()
                 .foregroundColor(.yellow)
-                // TODO Axes
-                // TODO Legend
-            }
+            }.clipped()
         }
        .foregroundColor(.white)
     }
-    
+
     private func selectedXPath(_ gp: GeometryProxy) -> Path {
         let rect = gp.frame(in: .local)
         self.updateSelectedXVal(gp)
@@ -82,7 +80,7 @@ struct ChartDataView: View {
         result.addLine(to: bottom)
         return result
     }
-    
+
     private func updateSelectedXVal(_ gp: GeometryProxy) {
         let newValue = computedXVal(gp, x: CGFloat(selectedViewX))
         if newValue != self.selectedXVal.wrappedValue {
@@ -96,4 +94,3 @@ struct ChartDataView: View {
         return self.data.xFitted(x, rect: gp.frame(in: .local))
     }
 }
-

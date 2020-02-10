@@ -24,7 +24,7 @@ class TickValue: Identifiable {
 
 class TickValueCache {
     private static var cache = [TickValue]()
-    
+
     static func tick(_ index: Int) -> TickValue {
         if index >= cache.count {
             let toAdd = (cache.count..<(index + 1))
@@ -39,7 +39,7 @@ class TickValueCache {
 struct YAxisView: View {
     // "Data-space" description of the axis
     let model: AxisViewModel
-    
+
     func ticks() -> [TickValue] {
         model.ticks.enumerated().map { item in
             let result = TickValueCache.tick(item.offset)
@@ -47,7 +47,7 @@ struct YAxisView: View {
             return result
         }
     }
-    
+
     // TODO apply some padding.
     func toView(_ dataValue: CGFloat, _ geom: GeometryProxy) -> CGFloat {
         let fract = (dataValue - model.vMin) / (model.vMax - model.vMin)
@@ -59,7 +59,7 @@ struct YAxisView: View {
         let offsetOrigin = f.origin.y + f.size.height / 2.0
         return offsetOrigin - viewValue
     }
-    
+
     var body: some View {
         // Three columns:
         // Tick labels: a VStack
@@ -98,7 +98,7 @@ struct YAxisView: View {
 struct YAxisView_Previews: PreviewProvider {
     static let model = AxisViewModel(
         vMin: -10.0, vMax: 180.0,
-        ticks: (0...10).map{ CGFloat(2 + 10 * $0) })
+        ticks: (0...10).map { CGFloat(2 + 10 * $0) })
     static var previews: some View {
         YAxisView(model: model)
     }

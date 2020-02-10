@@ -11,7 +11,10 @@ import SwiftUI
 struct ChartData: Identifiable {
     var id = UUID()
     let series: [Series2D]
-    
+
+    let origin: CGPoint?
+    let size: CGSize?
+
     func bounds() -> CGRect {
         var first = true
         var result = CGRect.zero
@@ -26,17 +29,20 @@ struct ChartData: Identifiable {
         }
         return result
     }
-    
+
     func roundedBounds() -> CGRect {
+        if let origin = origin, let size = size {
+            return CGRect(origin: origin, size: size)
+        }
         let b = bounds()
-        let xAxis = AxisLimits(b.origin.x, b.origin.x + b.size.width)
-        let yAxis = AxisLimits(b.origin.y, b.origin.y + b.size.height)
+        let xAxis = AxisLimits(b.origin.x, b.size.width)
+        let yAxis = AxisLimits(b.origin.y, b.size.height)
         let origin = CGPoint(x: xAxis.axMin, y: yAxis.axMin)
         let size = CGSize(width: xAxis.extent, height: yAxis.extent)
         let result = CGRect(origin: origin, size: size)
         return result
     }
-    
+
     func rectTransform(_ rect: CGRect) -> CGAffineTransform {
         let dataRect = roundedBounds()
 
@@ -46,7 +52,7 @@ struct ChartData: Identifiable {
         let trans1 = CGAffineTransform.identity
             .scaledBy(x: 1.0 / dataRect.width, y: 1.0 / dataRect.height)
             .translatedBy(x: -dataRect.origin.x, y: -dataRect.origin.y)
-        
+
         // Flip the y axis.
         let tFlipY = CGAffineTransform.identity
             .scaledBy(x: 1.0, y: -1.0)
@@ -61,7 +67,7 @@ struct ChartData: Identifiable {
         let result = trans1.concatenating(tFlipY.concatenating(trans2))
         return result
     }
-    
+
     // Rescale/translate chart data to fill rect.
     func fittedTo(_ rect: CGRect) -> ChartData {
         var newSeries = [Series2D]()
@@ -69,10 +75,10 @@ struct ChartData: Identifiable {
         for currSeries in series {
             newSeries.append(currSeries.applying(xform))
         }
-        let result = ChartData(series: newSeries)
+        let result = ChartData(series: newSeries, origin: nil, size: nil)
         return result
     }
-    
+
     // Convert x from view coordinates to chartdata coordinates
     func xFitted(_ x: CGFloat, rect: CGRect) -> CGFloat {
         let xform = rectTransform(rect).inverted()
@@ -81,3 +87,12 @@ struct ChartData: Identifiable {
     }
 }
 
+extension ChartData {
+    init(series: [Series2D]) {
+        self.init(series: series, origin: nil, size: nil)
+    }
+
+    init() {
+        self.init(series: [Series2D]())
+    }
+}

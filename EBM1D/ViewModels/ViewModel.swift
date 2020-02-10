@@ -62,7 +62,7 @@ final class ViewModel: ObservableObject {
         }
     }
     @Published var solutions = Model.Result()
-    @Published var chartData = ChartData(series: [Series2D]())
+    @Published var chartData = ChartData()
     @Published var albedos: AlbedoViewModel
     @Published var selectedSolarMult = CGFloat(1.0) {
         didSet {
@@ -98,7 +98,12 @@ final class ViewModel: ObservableObject {
                 ]
                 DispatchQueue.main.async {
                     self.solutions = newSolutions
-                    self.chartData = ChartData(series: allSeries)
+                    self.chartData = ChartData(
+                        series: allSeries,
+                        // Hardwire the axis extents, to make more apparent
+                        // the influence of the number of discrete latitude bands
+                        origin: CGPoint(x: 0.0, y: -100.0),
+                        size: CGSize(width: 125.0, height: 550.0))
                     self.albedos = AlbedoViewModel(solutions: newSolutions, selectedSolarMult: self.selectedSolarMult)
                     self.currentRecalc = nil
                     if self.pending != nil {

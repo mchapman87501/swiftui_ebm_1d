@@ -12,8 +12,7 @@ struct ChartView: View {
     @State private var selectedX = CGFloat(0.0)
     // TODO should not know of the "global" ViewModel - use a ChartViewModel
     @ObservedObject var model: ViewModel
-    
-    
+
     func xAxModel() -> AxisViewModel {
         let bounds = model.chartData.roundedBounds()
         return AxisViewModel(vMin: bounds.minX, vMax: bounds.maxX)
@@ -35,12 +34,12 @@ struct ChartView: View {
         // tick labels
         return 36.0
     }
-    
+
     func graphWidth(_ geom: GeometryProxy) -> CGFloat {
         let result = geom.size.width - yAxisWidth()
         return (result > 0) ? result : 0.0
     }
-    
+
     func graphHeight(_ geom: GeometryProxy) -> CGFloat {
         let result = geom.size.height - xAxisHeight()
         return (result > 0) ? result : 0.0
@@ -73,7 +72,7 @@ struct ChartView: View {
                     Spacer()
                     XAxisView(model: self.xAxModel())
                         .frame(width: self.graphWidth(geom), height: self.xAxisHeight())
-                    
+
                 }
             }.clipped()
         }

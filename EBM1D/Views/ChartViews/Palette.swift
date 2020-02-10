@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Palette {
     let colors: [Color]
-    
+
     func color(_ i: Int) -> Color {
         return colors[i % colors.count]
     }

@@ -12,7 +12,7 @@ struct Series2D: Identifiable {
     let id = UUID()
     let name: String
     let values: [CGPoint]
-    
+
     func bounds() -> CGRect {
         var result = CGRect.zero
         var first = true
@@ -27,7 +27,7 @@ struct Series2D: Identifiable {
         }
         return result
     }
-    
+
     // So wasteful of memory:
     func applying(_ xform: CGAffineTransform) -> Series2D {
         let newValues = values.map { $0.applying(xform) }

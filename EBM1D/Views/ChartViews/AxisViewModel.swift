@@ -25,7 +25,7 @@ extension AxisViewModel {
         }
         let lo = Double(minVal)
         let hi = Double(maxVal)
-        
+
         let tickInterval: Double = {
             let delta = hi - lo
             for divisions in [3.0, 4.0, 5.0] {
@@ -41,14 +41,12 @@ extension AxisViewModel {
             let result = pow(10.0, oom)
             return result
         }()
-        
+
         let tickValues: [CGFloat] = stride(from: lo, to: hi + tickInterval, by: tickInterval)
             .map { CGFloat($0) }
-        
+
         vMin = minVal
         vMax = maxVal
         ticks = tickValues
     }
 }
-
-// TODO Add extension to auto-round extrema, auto-compute ticks
