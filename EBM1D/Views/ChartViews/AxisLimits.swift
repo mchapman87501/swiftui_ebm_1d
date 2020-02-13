@@ -13,25 +13,41 @@ struct AxisLimits {
     let axMax: CGFloat
     let extent: CGFloat
 
-    init(_ minVal: CGFloat, _ extent: CGFloat) {
-        guard extent > 0 else {
+    init(minVal: CGFloat, extent extentIn: CGFloat) {
+        guard extentIn > 0 else {
             axMin = 0.0
             axMax = 1.0
-            self.extent = extent
+            extent = extentIn
             return
         }
-        let maxVal = minVal + extent
+        let maxVal = minVal + extentIn
         let vRange = maxVal - minVal
-        let fifths = Self.getFifths(vRange)
+        let tickSize = Self.getTickSize(vRange)
 
-        axMin = Self.roundedToTick(minVal, fifths, false)
-        axMax = Self.roundedToTick(maxVal, fifths, true)
-        self.extent = extent
+        var lo = Self.roundedToTick(minVal, tickSize, false)
+        var hi = Self.roundedToTick(maxVal, tickSize, true)
+
+        // Favor including the origin as an axis limit.
+        let maxAdjustable = (hi - lo) * 0.25
+        if (lo > 0.0) {
+            if lo <= maxAdjustable {
+                lo = 0.0
+            }
+        }
+        if (hi < 0.0) {
+            if -hi <= maxAdjustable {
+                hi = 0.0
+            }
+        }
+
+        axMin = lo
+        axMax = hi
+        extent = axMax - axMin
     }
 
-    private static func getFifths(_ v: CGFloat) -> CGFloat {
-        let oom = Int(log10(v) + 0.5)
-        return CGFloat(pow(CGFloat(10.0), CGFloat(oom - 1)) / 2.0)
+    private static func getTickSize(_ v: CGFloat) -> CGFloat {
+        let oom = floor(log10(v))
+        return pow(10.0, oom - 1.0)
     }
 
     private static func roundedToTick(_ v: CGFloat, _ fifths: CGFloat, _ roundUp: Bool) -> CGFloat {

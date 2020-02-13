@@ -1,6 +1,6 @@
 //
 //  ObservableModel.swift
-//  LearnSwiftUI1
+//  EBM1D
 //
 //  Created by Mitchell Chapman on 12/9/19.
 //  Copyright © 2019 Desert Moon Consulting, LLC. All rights reserved.

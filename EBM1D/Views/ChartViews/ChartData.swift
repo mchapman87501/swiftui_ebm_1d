@@ -35,8 +35,8 @@ struct ChartData: Identifiable {
             return CGRect(origin: origin, size: size)
         }
         let b = bounds()
-        let xAxis = AxisLimits(b.origin.x, b.size.width)
-        let yAxis = AxisLimits(b.origin.y, b.size.height)
+        let xAxis = AxisLimits(minVal: b.origin.x, extent: b.size.width)
+        let yAxis = AxisLimits(minVal: b.origin.y, extent: b.size.height)
         let origin = CGPoint(x: xAxis.axMin, y: yAxis.axMin)
         let size = CGSize(width: xAxis.extent, height: yAxis.extent)
         let result = CGRect(origin: origin, size: size)

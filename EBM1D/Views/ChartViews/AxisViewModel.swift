@@ -28,25 +28,32 @@ extension AxisViewModel {
 
         let tickInterval: Double = {
             let delta = hi - lo
-            for divisions in [3.0, 4.0, 5.0] {
-                let dstep = delta / divisions
-                let doom = floor(log10(dstep)) - 1
-                let dnpwr = pow(10.0, doom) * 5
-                if floor(dstep / dnpwr) * dnpwr == dstep {
+            for divisions in [3.0, 4.0] {
+                let (dstep, divides) = Self.intervalFor(delta, divisions: divisions)
+                if divides {
                     return dstep
                 }
             }
             // Fallback
-            let oom = floor(log10(delta))
-            let result = pow(10.0, oom)
-            return result
+            let (dstep, _) = Self.intervalFor(delta, divisions: 5.0)
+            return dstep
         }()
 
         let tickValues: [CGFloat] = stride(from: lo, to: hi + tickInterval, by: tickInterval)
-            .map { CGFloat($0) }
+            .filter { (lo <= $0) && ($0 <= hi) }.map { CGFloat($0) }
 
         vMin = minVal
         vMax = maxVal
         ticks = tickValues
+    }
+    
+    private static func intervalFor(_ delta: Double, divisions: Double) -> (Double, Bool) {
+        let dstep = delta / divisions
+        // Step size, divided by 10, should be a multiple of 5.
+        let tenths = floor(dstep * 10.0)
+        let fives = floor(tenths * 5) / 5
+        let roundedDStep = fives / 10.0
+        let dividesWholly = dstep == roundedDStep
+        return (roundedDStep, dividesWholly)
     }
 }

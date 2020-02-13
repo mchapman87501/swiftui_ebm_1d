@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  LearnSwiftUI1
+//  EBM1D
 //
 //  Created by Mitchell Chapman on 11/16/19.
 //  Copyright © 2019 Desert Moon Consulting, LLC. All rights reserved.
